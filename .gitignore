@@ -1,0 +1,6 @@
+# On ignore les fichiers de backup d'éditeurs
+*~
+*.swp
+
+# On ignore les fichiers qui pourraient contenir des secrets (si tu en crées plus tard)
+secrets.nix
