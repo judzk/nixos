@@ -7,7 +7,8 @@
     catppuccin-kde
     nordic
     whitesur-kde
-    sweet-nova            # <--- Ajout du thème Sweet
+    sweet
+    sweet-nova
     
     # Packs d'icônes
     papirus-icon-theme
@@ -23,6 +24,6 @@
   qt = {
     enable = true;
     platformTheme = "kde";
-    style = "breeze";
+#    style = "breeze";
   };
 }

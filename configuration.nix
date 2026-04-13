@@ -8,16 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./laptop.nix
-      ./alias.nix
-      ./ipu6.nix
-      ./dev/default.nix
-      ./tools.nix
-      ./pro.nix
-      ./vpn.nix
-      ./perso.nix
-      ./themes.nix
-      ./zsh.nix
+      ./modules
     ];
 
   # Activer les nouvelles commandes Nix et les Flakes
@@ -30,7 +21,6 @@
   # On fige le paquetage du noyau sur la version actuelle
   boot.kernelPackages = pkgs.linuxPackages_6_19;
 
-  networking.hostName = "24-0254-001"; # Define your hostname.
   networking.enableIPv6 = false;
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -98,19 +88,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.judzk = {
-    isNormalUser = true;
-    description = "judzk";
-    shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
-  };
-
   # Install firefox.
   programs.firefox.enable = true;
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -147,14 +130,14 @@
 
   # Activation du bluetooth
   hardware.bluetooth.enable = true;
- 
+
   # Activation osProber / Grub
   boot.loader.grub.useOSProber = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.device = "nodev"; # Obligatoire pour EFI
-  
+
   # Pkg installation
-  nixpkgs.config.allowUnfree = true ;
+  nixpkgs.config.allowUnfree = true;
 
 }

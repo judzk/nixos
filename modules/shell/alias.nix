@@ -3,8 +3,8 @@
 {
   environment.shellAliases = {
     # NixOS & Flakes
-    nswitch = "sudo nixos-rebuild switch --flake /etc/nixos#24-0254-001";
-    ncheck = "nix flake check";
+    nswitch = "sudo nixos-rebuild switch --flake path:/etc/nixos#24-0254-001";
+    ncheck = "nix flake check path:/etc/nixos";
     nclean = "sudo nix-collect-garbage -d";
 
     # Caméra IPU6

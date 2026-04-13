@@ -1,3 +1,4 @@
+.direnv/
 # On ignore les fichiers de backup d'éditeurs
 *~
 *.swp

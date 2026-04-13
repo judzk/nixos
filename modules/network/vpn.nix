@@ -1,25 +1,32 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  # On définit notre variable ici. 
-  # Si demain tu déploies sur le PC de "micheline", tu as juste à changer ce nom !
-  vpnUser = "judzk";
-  
-  # On crée le chemin complet à partir de la variable
-  vpnHome = "/home/${vpnUser}";
+  normalUsers = builtins.attrNames (lib.filterAttrs (_: user: user.isNormalUser or false) config.users.users);
+  vpnUser = builtins.head normalUsers;
+  vpnHome = config.users.users.${vpnUser}.home or "/home/${vpnUser}";
+  vpnConnectionName = "ecl";
+  vpnConnectionUuid = "b4922b32-493d-48f6-b154-767be001ff95";
+  vpnRemote = "vpn.centralelille.fr:1194:udp";
 in
 {
+  assertions = [
+    {
+      assertion = builtins.length normalUsers == 1;
+      message = "modules/network/vpn.nix attend exactement un utilisateur normal pour déduire vpnUser.";
+    }
+  ];
+
   networking.networkmanager.plugins = with pkgs; [
     networkmanager-openvpn
   ];
 
   # Au lieu de "source", on utilise "text" pour injecter le contenu directement
-  environment.etc."NetworkManager/system-connections/ecl.nmconnection" = {
+  environment.etc."NetworkManager/system-connections/${vpnConnectionName}.nmconnection" = {
     mode = "0600";
     text = ''
       [connection]
-      id=ecl
-      uuid=b4922b32-493d-48f6-b154-767be001ff95
+      id=${vpnConnectionName}
+      uuid=${vpnConnectionUuid}
       type=vpn
 
       [vpn]
@@ -35,7 +42,7 @@ in
       data-ciphers=AES-256-CBC
       dev=tun
       password-flags=1
-      remote=vpn.centralelille.fr:1194:udp
+      remote=${vpnRemote}
       reneg-seconds=0
       tls-cipher=TLS-ECDHE-RSA-WITH-AES-128-CBC-SHA256
       username=${vpnUser}
@@ -45,8 +52,7 @@ in
       method=auto
 
       [ipv6]
-      addr-gen-mode=stable-privacy
-      method=auto
+      method=disabled
     '';
   };
 }

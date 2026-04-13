@@ -31,9 +31,6 @@
     whois
     ripe-atlas-tools # Probe tooling to understand what is going wrong
 
-    # Browsers
-    chromium
-
     # Pair programming and generic diagnostics
     tmate
     sshx
@@ -41,7 +38,6 @@
     # Office-level programs
     ## Editors
     neovim
-    vscodium
 
     ## Emails
     neomutt
