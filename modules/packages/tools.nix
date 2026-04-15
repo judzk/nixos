@@ -18,6 +18,8 @@
     ncdu
     curl
     jujutsu
+    # capture écran
+    flameshot
     # To send files securly to another endpoint.
     magic-wormhole-rs
     # Troubleshooting
@@ -77,4 +79,9 @@
     ## Audio
     noisetorch # Microphone noise canceller
   ];
+
+  environment.variables = {
+  # Force Flameshot à utiliser le portail Wayland
+    XDG_CURRENT_DESKTOP = "KDE";
+  };
 }

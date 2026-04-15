@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
+{ pkgs, ... }:
+
 {
   programs.virt-manager.enable = true;
   virtualisation = {
@@ -9,12 +11,14 @@
 
     # You can choose to allow Docker or Podman or you can tell the developers to install their own distribution
     # inside the system and do their thing there!
-     docker.enable = true;
-    #  podman.enable = true;
+    docker.enable = true;
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
   };
 
-  environment.systemPackages = [
-    # distrobox: a wrapper for podman and docker to start your own preferred distribution.
-    # Useful for developers who are unhappy about NixOS!
+  environment.systemPackages = with pkgs; [
+    distrobox
   ];
 }

@@ -5,3 +5,4 @@
 
 # On ignore les fichiers qui pourraient contenir des secrets (si tu en crées plus tard)
 secrets.nix
+secrets/active-directory.nix

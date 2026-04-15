@@ -7,6 +7,8 @@
     ./hardware/ipu6.nix
     ./dev/default.nix
     ./packages/tools.nix
+    ./packages/nix-ld.nix
+    ./security/active-directory.nix
     ./security/fido.nix
     ./profiles/pro.nix
     ./network/vpn.nix

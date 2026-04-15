@@ -2,9 +2,9 @@
 
 {
   environment.shellAliases = {
-    # NixOS & Flakes
-    nswitch = "sudo nixos-rebuild switch --flake path:/etc/nixos#24-0254-001";
-    ncheck = "nix flake check path:/etc/nixos";
+    # NixOS & npins (pas besoin de --no-flake, détecté automatiquement sans flake.nix)
+    nswitch = "sudo sh -c 'REV=$(nix-instantiate --eval --strict -E \"(builtins.fromJSON (builtins.readFile /etc/nixos/npins/sources.json)).pins.nixpkgs.revision\" | tr -d \"\\\"\"); NIX_PATH=\"nixos-config=/etc/nixos/configuration.nix:nixpkgs=https://github.com/nixos/nixpkgs/archive/$REV.tar.gz\" nixos-rebuild switch -I nixos-config=/etc/nixos/configuration.nix'";
+    ncheck = "sudo sh -c 'REV=$(nix-instantiate --eval --strict -E \"(builtins.fromJSON (builtins.readFile /etc/nixos/npins/sources.json)).pins.nixpkgs.revision\" | tr -d \"\\\"\"); NIX_PATH=\"nixos-config=/etc/nixos/configuration.nix:nixpkgs=https://github.com/nixos/nixpkgs/archive/$REV.tar.gz\" nixos-rebuild dry-build -I nixos-config=/etc/nixos/configuration.nix'";
     nclean = "sudo nix-collect-garbage -d";
 
     # Caméra IPU6

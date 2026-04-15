@@ -4,6 +4,10 @@
 
 { config, pkgs, ... }:
 
+let
+  sources = import ./npins { };
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -11,8 +15,14 @@
       ./modules
     ];
 
-  # Activer les nouvelles commandes Nix et les Flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Activer les nouvelles commandes Nix (sans flakes)
+  nix.settings.experimental-features = [ "nix-command" ];
+  nix.nixPath = [
+    "nixos-config=/etc/nixos/configuration.nix"
+    "nixpkgs=${toString sources.nixpkgs}"
+  ];
+  environment.variables.NIX_PATH =
+    "nixos-config=/etc/nixos/configuration.nix:nixpkgs=${toString sources.nixpkgs}";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = false;
@@ -88,12 +98,9 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Install firefox.
-  programs.firefox.enable = true;
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+  programs.nix-ld.enable = true;
+
+  programs.direnv.enable = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

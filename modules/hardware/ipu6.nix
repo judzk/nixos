@@ -52,7 +52,23 @@
     };
   };
 
-  # 6. Masquage de la caméra native "IPU6" dans les applications
+  # 6. Arrêt/reprise du bridge IPU6 autour de la veille
+  # Certains firmwares IPU6 empêchent l'entrée en veille si le pipeline reste actif.
+  systemd.services.ipu6-sleep-hook = {
+    description = "Stop IPU6 bridge before sleep and restart after resume";
+    wantedBy = [ "sleep.target" ];
+    before = [ "sleep.target" ];
+    unitConfig.StopWhenUnneeded = true;
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.systemd}/bin/systemctl stop ipu6-bridge.service";
+      ExecStop = "${pkgs.systemd}/bin/systemctl start ipu6-bridge.service";
+    };
+  };
+
+  # 7. Masquage de la caméra native "IPU6" dans les applications
   # Cela force Zoom et Chrome à utiliser uniquement le bridge fonctionnel
   services.pipewire.wireplumber.extraConfig."10-hide-raw-camera" = {
     "monitor.libcamera.rules" = [
