@@ -8,11 +8,13 @@
     ./dev/default.nix
     ./packages/tools.nix
     ./packages/nix-ld.nix
+    ./system/nix-gc-cron.nix
     ./security/active-directory.nix
-    ./security/fido.nix
+    ./security/u2f.nix
     ./profiles/pro.nix
     ./network/vpn.nix
     ./profiles/perso.nix
+    ./desktop/sddm.nix
     ./desktop/themes.nix
     ./shell/zsh.nix
   ];
