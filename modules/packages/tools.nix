@@ -18,8 +18,6 @@
     ncdu
     curl
     jujutsu
-    # capture écran
-    flameshot
     # To send files securly to another endpoint.
     magic-wormhole-rs
     # Troubleshooting

@@ -101,4 +101,14 @@ in
     samba
     sssd
   ];
+
+  # Gestion du réseau pour la session active
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id.indexOf("org.freedesktop.NetworkManager.") == 0) &&
+          subject.active) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
 }
