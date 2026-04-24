@@ -34,6 +34,7 @@
     # Pair programming and generic diagnostics
     tmate
     sshx
+    inetutils
 
     # Office-level programs
     ## Editors
@@ -77,9 +78,4 @@
     ## Audio
     noisetorch # Microphone noise canceller
   ];
-
-  environment.variables = {
-  # Force Flameshot à utiliser le portail Wayland
-    XDG_CURRENT_DESKTOP = "KDE";
-  };
 }

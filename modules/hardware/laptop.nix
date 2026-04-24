@@ -69,4 +69,10 @@
     };
   };
   services.blueman.enable = true;
+
+  networking.networkmanager.wifi.powersave = false;
+
+  # Optionnel : Forcer le noyau à ne pas suspendre la carte PCI du Wi-Fi
+  boot.kernelParams = [ "pcie_aspm=off" ];
+
 }
