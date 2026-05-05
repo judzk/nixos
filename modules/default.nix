@@ -3,6 +3,7 @@
   imports = [
     ./inventory/default.nix
     ./hardware/laptop.nix
+    ./hardware/imprimante.nix
     ./shell/alias.nix
     ./hardware/ipu6.nix
     ./dev/default.nix
